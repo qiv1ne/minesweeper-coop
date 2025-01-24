@@ -1,0 +1,7 @@
+services:
+  minesweeper-svc:
+    build: minesweeper-svc/
+    ports:
+      - "8080:8080"
+    environment:
+      - PORT=8080

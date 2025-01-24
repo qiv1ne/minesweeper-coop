@@ -1,0 +1,54 @@
+// index.templ contain Templ components for first page
+package components
+
+templ Index(){
+    <!DOCTYPE html>
+    <html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link rel="stylesheet" href="/static/pico/css/pico.min.css">
+        <script src="https://unpkg.com/htmx.org@2.0.4"></script>
+        <title>Minesweeper</title>
+    </head>
+    <body>
+        <div class="container-fluid">
+        @topBar()
+        <div class="container" id="main" style="text-align: center;">
+        <h1>Minesweeper<mark>'s</mark></h1>
+        <p>Welcome to my pet project</p>
+        <p>My main goal is to create minesweeper cooperative game</p>
+        <a href="https://github.com/Sinoverg/Minesweeper"><button>Github</button></a>
+        </div>
+        </div>
+    </body>
+    </html>
+}
+
+templ topBar(){
+    <nav>
+        <ul>
+            <li hx-get="/" hx-push-url="true">
+                <strong>
+                    Minesweeper<mark>'s</mark>
+                </strong>
+            </li>
+        </ul>
+        <ul>
+            <li>
+                <strong>
+                    <a hx-get="/play" hx-push-url="true" hx-target="#main">Play</a>
+                </strong>
+            </li>
+            <li>
+                <a href="https://github.com/Sinoverg/Minesweeper">Github</a>
+            </li>
+            <li>
+                <a hx-get="/register" hx-push-url="true" hx-target="#main">Register</a>
+            </li>
+            <li>
+                <a hx-get="/login" hx-push-url="true" hx-target="#main">Login</a>
+            </li>
+        </ul>
+    </nav>
+}
