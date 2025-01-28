@@ -18,23 +18,23 @@ type minesweeperService struct {
 	Board *minesweeper.MineBoard
 }
 
-func NewGameService() MinesweeperService {
+func NewGameService(config minesweeper.BoardConfig) (MinesweeperService, error) {
 	slog.Info("creating new game service")
-	return gameService{}
-}
-
-func (gameService) CreateMineBoard(config minesweeper.BoardConfig) (*minesweeper.MineBoard, error) {
-	slog.Info("creating new mine board")
 	board, err := minesweeper.NewMineBoard(config)
-	return board, err
+	return minesweeperService{
+		Board: board,
+	}, err
 }
 
-func (gameService) OpenCell(x, y int) (int, error) {
-	return minesweeper
+func (svc minesweeperService) OpenCell(x, y int) (int, error) {
+	slog.Info("opening cell", "x", x, "y", y)
+	return svc.Board.OpenCell(x, y)
 }
-func (gameService) PlaceFlag(x, y int) (int, error) {
-
+func (svc minesweeperService) PlaceFlag(x, y int) (int, error) {
+	slog.Info("placing flag", "x", x, "y", y)
+	return svc.Board.PlaceFlag(x, y)
 }
-func (gameService) NewSeed() int64 {
-
+func (svc minesweeperService) NewSeed() int64 {
+	slog.Info("generating new seed")
+	return minesweeper.NewSeed()
 }
