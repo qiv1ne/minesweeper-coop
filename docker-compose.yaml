@@ -1,7 +1,36 @@
 services:
-  minesweeper-svc:
-    build: minesweeper-svc/
+  frontend-svc:
+    build: services/frontend-svc/
     ports:
       - "8080:8080"
     environment:
       - PORT=8080
+      - MINESWEEPER_ADDRES=
+    depends-on:
+      - minesweeper-svc
+  minesweeper-svc:
+    build: services/minesweeper-svc/
+    ports:
+      - "8081:8081"
+    environment:
+      - PORT=8081
+    depends-on:
+      - redis-svc
+
+  redis-svc:
+    build: services/redis-svc/
+    ports:
+      - "8083:8083"
+    environment:
+      - PORT=8083
+    depends-on:
+      - redis
+  redis:
+    image: redis:latest
+    restart: always
+    ports:
+      - "6379:6379"
+    environment:
+      - REDIS_PASSWORD=
+      - REDIS_PORT=6379
+
