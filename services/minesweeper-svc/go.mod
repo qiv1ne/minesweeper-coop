@@ -1,4 +1,4 @@
-module github.com/Sinoverg/game-svc
+module github.com/qiv1ne/minesweeper-coop/services/minesweepersvc
 
 go 1.23.5
 
