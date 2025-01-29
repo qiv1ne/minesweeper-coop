@@ -20,12 +20,6 @@ type MinesweeperService interface {
 
 type minesweeperService struct{}
 
-type GameSession struct {
-	BoardId   int                   `json:"board_id"`
-	Board     minesweeper.MineBoard `json:"board"`
-	CreatedAt time.Time             `json:"created_at"`
-}
-
 func NewGameService(config minesweeper.BoardConfig) MinesweeperService {
 	slog.Info("creating new game service")
 	return minesweeperService{}
