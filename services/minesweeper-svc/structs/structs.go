@@ -7,7 +7,7 @@ import (
 )
 
 type GameSession struct {
-	BoardId   int                   `json:"board_id"`
+	BoardId   string                `json:"board_id"`
 	Board     minesweeper.MineBoard `json:"board"`
 	CreatedAt time.Time             `json:"created_at"`
 }
