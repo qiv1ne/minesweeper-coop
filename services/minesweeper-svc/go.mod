@@ -1,4 +1,4 @@
-module github.com/qiv1ne/minesweeper-coop/services/minesweepersvc
+module github.com/qiv1ne/minesweeper-coop/services/minesweeper-svc
 
 go 1.23.5
 
