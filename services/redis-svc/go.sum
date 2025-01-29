@@ -1,0 +1,6 @@
+github.com/google/uuid v1.6.0 h1:NIvaJDMOsjHA8n1jAhLSgzrAzy1Hgr+hNrb57e+94F0=
+github.com/google/uuid v1.6.0/go.mod h1:TIyPZe4MgqvfeYDBFedMoGGpEw/LqOeaOT+nhxU+yHo=
+github.com/qiv1ne/minesweeper v0.0.0-20250128154706-5eb3483cb741 h1:CGRALP6MMf7OWxh96p+2DkZf9w5SOtvbENw6GcPzV7U=
+github.com/qiv1ne/minesweeper v0.0.0-20250128154706-5eb3483cb741/go.mod h1:jGGXhgoUhS5JrbNQf+MB3ZUFAwQYFWoY3icbZ5gGpQY=
+github.com/qiv1ne/minesweeper-coop/services/minesweeper-svc v0.0.0-20250129102627-2355393415e1 h1:O6ynNZn5D2+6w54FbJlPVLhJBx6kfeY7+QUQhZxChRA=
+github.com/qiv1ne/minesweeper-coop/services/minesweeper-svc v0.0.0-20250129102627-2355393415e1/go.mod h1:SmqkPNfr2TPnaR7TtO2fPVDH1JORelKD1vKyqhiFo2Q=
