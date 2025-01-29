@@ -19,7 +19,7 @@ const (
 type RedisService interface {
 	SaveGame(session structs.GameSession) error
 	DeleteSession(id string) error
-	GetGame(id string) (structs.GameSession,error)
+	GetGame(id string) (structs.GameSession, error)
 }
 
 type redisService struct {
@@ -48,5 +48,14 @@ func (r redisService) SaveGame(session structs.GameSession) error {
 }
 
 func (r redisService) GetGame(id string) (structs.GameSession, error) {
-	r.client.Get(context.Background(), gameSpace + id).
+	session := structs.GameSession{}
+	result, err := r.client.Get(context.Background(), gameSpace+id)
+	if err != nil {
+		return session, err
+	}
+	err = json.Unmarshal(result, session)
+	if err != nil {
+		return session, err
+	}
+	return session, err
 }
