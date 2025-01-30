@@ -1,23 +1,32 @@
 services:
-  frontend-svc:
-    build: services/frontend-svc/
-    ports:
-      - "8080:8080"
-    environment:
-      - PORT=8080
-      - MINESWEEPER_ADDRES=
-    depends-on:
-      - minesweeper-svc
-      - auth-svc
-  minesweeper-svc:
-    build: services/minesweeper-svc/
-    restart: always
-    ports:
-      - "8081:8081"
-    environment:
-      - PORT=8081
-    depends-on:
-      - redis-svc
+  # frontend-svc:
+  #   build: services/frontend-svc/
+  #   ports:
+  #     - "8080:8080"
+  #   environment:
+  #     - PORT=8080
+  #     - MINESWEEPER_ADDRES=
+  #   depends_on:
+  #     - minesweeper-svc
+  #     - auth-svc
+  # minesweeper-svc:
+  #   build: services/minesweeper-svc/
+  #   restart: always
+  #   ports:
+  #     - "8081:8081"
+  #   environment:
+  #     - PORT=8081
+  #   depends_on:
+  #     - redis-svc
+  # auth-svc:
+  #   build: services/redis-svc/
+  #   restart: always
+  #   ports:
+  #     - "8082:8082"
+  #   environment:
+  #     - PORT=8082
+  #   depends_on:
+  #     - postgres
   redis-svc:
     build: services/redis-svc/
     restart: always
@@ -25,38 +34,30 @@ services:
       - "8083:8083"
     environment:
       - PORT=8083
-    depends-on:
+      - REDIS_ADDRES=redis:6379
+      - REDIS_PASSWORD="q#WEeR7HG94@R^$%u!x@kfWKYLZ4E5j8KeRcX9Q%Rk8vL2ay7Y3&9Uqi2KEb%z!Cv3q!6#4k*b@dw2*!nG4WB&VWiK4sBH6U2%*V!LYA4zWS%Yvod7ok%$Azd6oJ3sR2"
+    depends_on:
       - redis
-  postgres-svc:
-    build: services/postgres-svc/
-    restart: always
-    ports:
-      - "8084:8084"
-    environment:
-      - PORT=8084
-    depends-on:
-      - postgres
-  auth-svc:
-    build: services/redis-svc/
-    restart: always
-    ports:
-      - "8082:8082"
-    environment:
-      - PORT=8082
-    depends-on:
-      - redis
-      - postgres
-  postgres:
-    image: postgres:latest
-    restart: always
-    environment:
-      - POSTGRES_PASSWORD=
+  # postgres-svc:
+  #   build: services/postgres-svc/
+  #   restart: always
+  #   ports:
+  #     - "8084:8084"
+  #   environment:
+  #     - PORT=8084
+  #   depends_on:
+  #     - postgres
+  # postgres:
+  #   image: postgres:latest
+  #   restart: always
+  #   environment:
+  #     - POSTGRES_PASSWORD=
   redis:
     image: redis:latest
     restart: always
     ports:
-      - "6379:6379"
+      - "6379:6379" 
     environment:
       - REDIS_PORT=6379
-      - REDIS_PASSWORD=
+      - REDIS_PASSWORD="q#WEeR7HG94@R^$%u!x@kfWKYLZ4E5j8KeRcX9Q%Rk8vL2ay7Y3&9Uqi2KEb%z!Cv3q!6#4k*b@dw2*!nG4WB&VWiK4sBH6U2%*V!LYA4zWS%Yvod7ok%$Azd6oJ3sR2"
   
