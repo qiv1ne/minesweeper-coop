@@ -18,7 +18,6 @@ const (
 
 type RedisService interface {
 	SaveGame(session structs.GameSession) error
-	DeleteSession(id string) error
 	GetGame(id string) (structs.GameSession, error)
 }
 
@@ -33,10 +32,6 @@ func NewRedisService(addr, password string) (*redis.Client, error) {
 		Password: password,
 	})
 	return client, client.Ping(context.Background()).Err()
-}
-
-func (r redisService) DeleteGame(id string) error {
-
 }
 
 func (r redisService) SaveGame(session structs.GameSession) error {
