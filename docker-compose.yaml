@@ -8,29 +8,55 @@ services:
       - MINESWEEPER_ADDRES=
     depends-on:
       - minesweeper-svc
+      - auth-svc
   minesweeper-svc:
     build: services/minesweeper-svc/
+    restart: always
     ports:
       - "8081:8081"
     environment:
       - PORT=8081
     depends-on:
       - redis-svc
-
   redis-svc:
     build: services/redis-svc/
+    restart: always
     ports:
       - "8083:8083"
     environment:
       - PORT=8083
     depends-on:
       - redis
+  postgres-svc:
+    build: services/postgres-svc/
+    restart: always
+    ports:
+      - "8084:8084"
+    environment:
+      - PORT=8084
+    depends-on:
+      - postgres
+  auth-svc:
+    build: services/redis-svc/
+    restart: always
+    ports:
+      - "8082:8082"
+    environment:
+      - PORT=8082
+    depends-on:
+      - redis
+      - postgres
+  postgres:
+    image: postgres:latest
+    restart: always
+    environment:
+      - POSTGRES_PASSWORD=
   redis:
     image: redis:latest
     restart: always
     ports:
       - "6379:6379"
     environment:
-      - REDIS_PASSWORD=
       - REDIS_PORT=6379
-
+      - REDIS_PASSWORD=
+  
