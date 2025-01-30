@@ -10,7 +10,7 @@ Project contains multiple services:
 4. Postgres service - provide interaction with PostgreSQL database.
 5. Redis service - provide interaction with Redis database for store game and user sessions.
 6. PostgreSQL - database for storing user profiles, game history, leaderboards.
-7. Redis - database for storing user and game sessions.
+7. Redis - database for storing game sessions.
 
 All services use REST endpoints for communication
 
