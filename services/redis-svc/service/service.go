@@ -25,13 +25,15 @@ type redisService struct {
 	client *redis.Client
 }
 
-func NewRedisService(addr, password string) (*redis.Client, error) {
+func NewRedisService(addr, password string) (redisService, error) {
 	slog.Info("creating new redis service", "addres", addr)
 	client := redis.NewClient(&redis.Options{
 		Addr:     addr,
 		Password: password,
 	})
-	return client, client.Ping(context.Background()).Err()
+	return redisService{
+		client: client,
+	}, client.Ping(context.Background()).Err()
 }
 
 func (r redisService) SaveGame(session structs.GameSession) error {
@@ -44,11 +46,11 @@ func (r redisService) SaveGame(session structs.GameSession) error {
 
 func (r redisService) GetGame(id string) (structs.GameSession, error) {
 	session := structs.GameSession{}
-	result, err := r.client.Get(context.Background(), gameSpace+id)
+	result, err := r.client.Get(context.Background(), gameSpace+id).Bytes()
 	if err != nil {
 		return session, err
 	}
-	err = json.Unmarshal(result, session)
+	err = json.Unmarshal(result, &session)
 	if err != nil {
 		return session, err
 	}
