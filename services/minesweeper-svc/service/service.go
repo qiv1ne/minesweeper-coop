@@ -8,6 +8,7 @@ import (
 	"github.com/google/uuid"
 
 	"github.com/qiv1ne/minesweeper"
+	"github.com/qiv1ne/minesweeper-coop/services/minesweeper-svc/structs"
 )
 
 // GameService interface represent main service
@@ -36,7 +37,7 @@ func (svc minesweeperService) NewGame(config minesweeper.BoardConfig) (minesweep
 	t := time.Now().Format(time.TimeOnly)
 
 	// create session struct
-	session := GameSession{
+	session := structs.GameSession{
 		BoardId:   id,
 		Board:     *board,
 		CreatedAt: t,
