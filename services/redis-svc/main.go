@@ -7,10 +7,13 @@ import (
 	"os"
 
 	"github.com/qiv1ne/minesweeper-coop/services/redis-svc/endpoints"
+	"github.com/qiv1ne/minesweeper-coop/services/redis-svc/middleware"
 	"github.com/qiv1ne/minesweeper-coop/services/redis-svc/service"
 	"github.com/qiv1ne/minesweeper-coop/services/redis-svc/transport"
 
+	"github.com/go-kit/kit/endpoint"
 	httptransport "github.com/go-kit/kit/transport/http"
+	klog "github.com/go-kit/log"
 )
 
 func main() {
@@ -20,14 +23,24 @@ func main() {
 		panic(err)
 	}
 
+	logger := klog.NewLogfmtLogger(os.Stderr)
+
+	var getGame endpoint.Endpoint
+	getGame = endpoints.MakeGetGameEndpoint(svc)
+	getGame = middleware.LoggingMiddleware(klog.With(logger, "method", "get game"))(getGame)
+
 	getGameHandler := httptransport.NewServer(
-		endpoints.MakeGetGameEndpoint(svc),
+		getGame,
 		transport.DecodeGetGameRequest,
 		transport.EncodeResponse,
 	)
 
+	var saveGame endpoint.Endpoint
+	saveGame = endpoints.MakeSaveGameEndpoint(svc)
+	saveGame = middleware.LoggingMiddleware(klog.With(logger, "method", "set game"))(saveGame)
+
 	saveGameHandler := httptransport.NewServer(
-		endpoints.MakeSaveGameEndpoint(svc),
+		saveGame,
 		transport.DecodeSetGameRequest,
 		transport.EncodeResponse,
 	)
