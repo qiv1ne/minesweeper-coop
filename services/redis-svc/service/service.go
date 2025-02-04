@@ -16,27 +16,22 @@ const (
 	gameSpace = "games:"
 )
 
-type RedisService interface {
-	SaveGame(session structs.GameSession) error
-	GetGame(id string) (structs.GameSession, error)
-}
-
-type redisService struct {
+type RedisService struct {
 	client *redis.Client
 }
 
-func NewRedisService(addr, password string) (redisService, error) {
+func NewRedisService(addr, password string) (RedisService, error) {
 	slog.Info("creating new redis service", "addres", addr)
 	client := redis.NewClient(&redis.Options{
 		Addr:     addr,
 		Password: password,
 	})
-	return redisService{
+	return RedisService{
 		client: client,
 	}, client.Ping(context.Background()).Err()
 }
 
-func (r redisService) SaveGame(session structs.GameSession) error {
+func (r RedisService) SaveGame(session structs.GameSession) error {
 	data, err := json.Marshal(session)
 	if err != nil {
 		return err
@@ -44,7 +39,7 @@ func (r redisService) SaveGame(session structs.GameSession) error {
 	return r.client.Set(context.Background(), gameSpace+session.BoardId, data, time.Hour).Err()
 }
 
-func (r redisService) GetGame(id string) (structs.GameSession, error) {
+func (r RedisService) GetGame(id string) (structs.GameSession, error) {
 	session := structs.GameSession{}
 	result, err := r.client.Get(context.Background(), gameSpace+id).Bytes()
 	if err != nil {
